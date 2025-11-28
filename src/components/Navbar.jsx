@@ -1,9 +1,8 @@
 import { Wand2, Github } from 'lucide-react';
 
 /**
- * Navigation Bar Component.
- * Displays the application logo, title, and social links.
- * @returns {JSX.Element} The rendered Navbar component.
+ * Navigation Bar Component
+ * Displays branding and external links.
  */
 const Navbar = () => {
     return (
@@ -24,7 +23,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* Social Link */}
+                {/* GitHub Link */}
                 <a
                     href="https://github.com/Aliurooz786"
                     target="_blank"

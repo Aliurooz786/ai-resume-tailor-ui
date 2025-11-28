@@ -6,22 +6,12 @@ import Navbar from './components/Navbar';
 import FileUpload from './components/FileUpload';
 import JobDescription from './components/JobDescription';
 
-/**
- * Main Application Component.
- * Manages state for file upload, job description input, and resume tailoring process.
- * @returns {JSX.Element} The rendered App component.
- */
 function App() {
   const [file, setFile] = useState(null);
   const [jobDescription, setJobDescription] = useState('');
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  /**
-   * Handles file selection and validation.
-   * Ensures only PDF files are accepted.
-   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event from the file input.
-   */
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected?.type === 'application/pdf') {
@@ -32,10 +22,6 @@ function App() {
     }
   };
 
-  /**
-   * Resets the application state to its initial values.
-   * Clears the selected file, job description, status, and error messages.
-   */
   const handleReset = () => {
     setFile(null);
     setJobDescription('');
@@ -43,10 +29,6 @@ function App() {
     setErrorMessage('');
   };
 
-  /**
-   * Submits the resume and job description to the backend for tailoring.
-   * Handles the API request, file download, and error states.
-   */
   const handleTailorResume = async () => {
     if (!file || !jobDescription) return;
 
@@ -71,7 +53,7 @@ function App() {
 
       setStatus('success');
     } catch (err) {
-      console.error('Resume tailoring failed:', err);
+      console.error(err);
       setStatus('error');
       setErrorMessage('Backend Error: Make sure API is running on port 8086');
     }
@@ -81,27 +63,27 @@ function App() {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
       <Navbar />
 
-      {/* Main Content Area */}
-      <main className="container mx-auto max-w-6xl px-4 pt-16 pb-32">
+      {/* Main Content: Reduced padding to bring everything up */}
+      <main className="container mx-auto max-w-6xl px-4 pt-8 pb-12 flex flex-col justify-center min-h-[calc(100vh-80px)]">
 
-        {/* Header */}
-        <div className="text-center mb-12">
+        {/* Header: Reduced bottom margin */}
+        <div className="text-center mb-8">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
             Optimize your resume with <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">AI Power</span>
           </h1>
-          <p className="mt-3 text-base text-slate-600">
+          <p className="mt-2 text-base text-slate-600">
             Get a 95%+ ATS Score instantly.
           </p>
         </div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:h-[360px] mb-24">
+        {/* Grid Layout: Reduced bottom margin from mb-24 to mb-8 */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:h-[360px] mb-8">
           <FileUpload file={file} onFileChange={handleFileChange} />
           <JobDescription jobDescription={jobDescription} setJobDescription={setJobDescription} />
         </div>
 
-        {/* Action Area */}
-        <div className="flex flex-col items-center justify-center gap-4 mt-12">
+        {/* Action Area: Reduced top margin from mt-12 to mt-2 */}
+        <div className="flex flex-col items-center justify-center gap-4 mt-2">
 
           {status === 'error' && (
             <div className="flex items-center gap-2 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600 border border-red-100">
@@ -110,6 +92,7 @@ function App() {
           )}
 
           <div className="flex items-center gap-4">
+            {/* Reset Button */}
             <button
               onClick={handleReset}
               className="flex items-center justify-center h-12 w-12 rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-700 active:scale-95"
@@ -118,6 +101,7 @@ function App() {
               <RotateCcw className="h-5 w-5" />
             </button>
 
+            {/* Main Button */}
             <button
               onClick={handleTailorResume}
               disabled={status === 'loading' || !file || !jobDescription}
@@ -137,7 +121,7 @@ function App() {
 
           {status === 'success' && (
             <p className="text-sm font-medium text-green-600 animate-bounce">
-              Resume downloaded successfully!
+              🎉 Resume downloaded successfully!
             </p>
           )}
         </div>
